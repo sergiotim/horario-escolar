@@ -1,0 +1,42 @@
+{
+  "teachers": [
+    {"id": "t1", "name": "Ana Andrade"},
+    {"id": "t2", "name": "Bianca Bolada"},
+    {"id": "t3", "name": "Carlos Cabeção"},
+    {"id": "t4", "name": "Daniela Didática"}
+  ],
+  "classes": [
+    {"id": "c1", "name": "6A"},
+    {"id": "c2", "name": "7B"},
+    {"id": "c3", "name": "8A"},
+    {"id": "c4", "name": "9A"}
+  ],
+  "slots": [
+    "Seg8", "Seg9", "Seg10",
+    "Ter8", "Ter9", "Ter10",
+    "Qua8", "Qua9", "Qua10",
+    "Qui8", "Qui9", "Qui10",
+    "Sex8", "Sex9", "Sex10"
+  ],
+  "requirements": [
+    {"teacher_name": "Ana Andrade", "class_name": "6A", "count": 4},
+    {"teacher_name": "Ana Andrade", "class_name": "7B", "count": 4},
+    {"teacher_name": "Ana Andrade", "class_name": "8A", "count": 4},
+    {"teacher_name": "Ana Andrade", "class_name": "9A", "count": 3},
+    
+    {"teacher_name": "Bianca Bolada", "class_name": "6A", "count": 4},
+    {"teacher_name": "Bianca Bolada", "class_name": "7B", "count": 4},
+    {"teacher_name": "Bianca Bolada", "class_name": "8A", "count": 3},
+    {"teacher_name": "Bianca Bolada", "class_name": "9A", "count": 4},
+
+    {"teacher_name": "Carlos Cabeção", "class_name": "6A", "count": 4},
+    {"teacher_name": "Carlos Cabeção", "class_name": "7B", "count": 3},
+    {"teacher_name": "Carlos Cabeção", "class_name": "8A", "count": 4},
+    {"teacher_name": "Carlos Cabeção", "class_name": "9A", "count": 4},
+
+    {"teacher_name": "Daniela Didática", "class_name": "6A", "count": 3},
+    {"teacher_name": "Daniela Didática", "class_name": "7B", "count": 4},
+    {"teacher_name": "Daniela Didática", "class_name": "8A", "count": 4},
+    {"teacher_name": "Daniela Didática", "class_name": "9A", "count": 4}
+  ]
+}
