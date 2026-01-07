@@ -1,5 +1,6 @@
 from ortools.sat.python import cp_model
 import json
+import csv
 
 model = cp_model.CpModel()
 
@@ -115,6 +116,29 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
         if "10" in slot: # Se for o último horário do dia
             print("-" * 85)
 
+
+    with open('horario_gerado.csv',"w",newline="",encoding="utf-8") as csv_file:
+        writer = csv.writer(csv_file,delimiter=";")
+
+        header_row = ['Horário'] + [classes_map[c_id] for c_id in classes_id]
+
+        writer.writerow(header_row)
+
+        for slot in slots:
+            row_data = [slot]
+
+            for i_class in classes_id:
+                teacher_name = ""
+
+                for teacher in teachers_id:
+                    if solver.Value(combinations[(teacher,i_class,slot)]) == 1:
+                        teacher_name = teachers_map[teacher]
+                        break
+                row_data.append(teacher_name)
+
+            writer.writerow(row_data)
+    
+    print("\nArquivo 'horario_gerado.csv' criado com sucesso!")
 else:
     print("Não foi possível encontrar uma solução.")
 
