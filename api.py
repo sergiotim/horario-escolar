@@ -2,12 +2,27 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from uuid import uuid4
 
+from main import generate_schedule
+from typing import List
+
 class Teacher(BaseModel):
     name:str
 
 class Classroom(BaseModel):
     name:str
 
+# Representa uma linha da matriz curricular
+# Ex: { "teacher_id": "t1", "classroom_id": "c1", "count": 4 }
+class Requirement(BaseModel):
+    teacher_id: str
+    classroom_id: str
+    count: int
+
+# Representa o pedido completo de geração
+# Ex: { "slots": ["Seg8", "Seg9"], "requirements": [...] }
+class ScheduleRequest(BaseModel):
+    slots: List[str]
+    requirements: List[Requirement]
 
 
 # Instanciamos o aplicativo
@@ -60,3 +75,24 @@ def create_classroom(classromm:Classroom):
     db_classrooms.append(new_classroom)
 
     return new_classroom
+
+
+@app.post("/generate-schedule")
+def run_generation(request: ScheduleRequest):
+
+    formated_reqs = []
+    for req in request.requirements:
+        formated_reqs.append((req.teacher_id,req.classroom_id,req.count))
+
+    
+    result = generate_schedule(
+        teachers=db_teachers,
+        classrooms=db_classrooms,
+        slots=request.slots,
+        requirements=formated_reqs
+    )
+
+    if result:
+        return result
+    else:
+        return {"message": "Não foi possível gerar um horário com essas restrições."}
