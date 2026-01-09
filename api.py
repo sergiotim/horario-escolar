@@ -1,9 +1,12 @@
 from fastapi import FastAPI
+
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from uuid import uuid4
 
 from main import generate_schedule
 from typing import List
+
 
 class Teacher(BaseModel):
     name:str
@@ -28,8 +31,34 @@ class ScheduleRequest(BaseModel):
 # Instanciamos o aplicativo
 app = FastAPI()
 
-db_teachers = []
-db_classrooms = []
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # Permite que QUALQUER site acesse (Ok para dev)
+    allow_credentials=True,
+    allow_methods=["*"], # Permite GET, POST, PUT, DELETE...
+    allow_headers=["*"], # Permite qualquer cabeçalho
+)
+
+db_teachers = [
+    {
+        "id": "dafbad55-4bc8-42a4-828c-b6c2f29fb34c",
+        "name": "Ana"
+    },
+    {
+        "id": "8b3ee1be-00df-49c1-babd-eb3672a58815",
+        "name": "Carlos"
+    }
+]
+db_classrooms = [
+    {
+        "id": "9402ab13-1094-4cfd-b303-9647e4856dbd",
+        "name": "6A"
+    },
+    {
+        "id": "765a8a0a-5607-4496-b537-d37fd54ab0c9",
+        "name": "7B"
+    }
+]
 
 # Decorator: Diz ao FastAPI que se alguém acessar a raiz "/" usando GET...
 @app.get("/")

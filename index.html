@@ -14,11 +14,14 @@
       >
         Gerar Grade
       </button>
-      <div id="result-container"></div>
+      <div id="result-container" class=""></div>
     </div>
     <script>
       const buttonGenerate = document.getElementById("btn-generate");
       buttonGenerate.addEventListener("click", async function () {
+        const resultDiv = document.getElementById("result-container");
+        resultDiv.innerHTML = "";
+
         console.log("O botão foi clicado!");
 
         const response = await fetch(
@@ -56,8 +59,31 @@
           }
         );
 
-        const data = await response.json()
-        console.log("Response", data)
+        const data = await response.json();
+        resultDiv.innerHTML = `
+            <table class="table-auto w-full border-collapse border border-gray-300 mt-4">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-2">Horário</th>
+                        <th class="border border-gray-300 px-4 py-2">Turma</th>
+                        <th class="border border-gray-300 px-4 py-2">Professor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data
+                      .map(
+                        (item) => `
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-2">${item.time}</td>
+                            <td class="border border-gray-300 px-4 py-2 font-bold">${item.classroom}</td>
+                            <td class="border border-gray-300 px-4 py-2">${item.teacher}</td>
+                        </tr>
+                    `
+                      )
+                      .join("")}
+                </tbody>
+            </table>
+        `;
       });
     </script>
   </body>
