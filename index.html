@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Horário Escolar</title>
+  </head>
+  <body>
+    <div class="container mx-auto p-10">
+      <button
+        id="btn-generate"
+        class="bg-blue-500 text-white rounded px-4 py-2"
+      >
+        Gerar Grade
+      </button>
+      <div id="result-container"></div>
+    </div>
+    <script>
+      const buttonGenerate = document.getElementById("btn-generate");
+      buttonGenerate.addEventListener("click", async function () {
+        console.log("O botão foi clicado!");
+
+        const response = await fetch(
+          "http://127.0.0.1:8000/generate-schedule",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              slots: ["Seg8", "Seg9"],
+              requirements: [
+                {
+                  teacher_id: "dafbad55-4bc8-42a4-828c-b6c2f29fb34c",
+                  classroom_id: "9402ab13-1094-4cfd-b303-9647e4856dbd",
+                  count: 1,
+                },
+                {
+                  teacher_id: "dafbad55-4bc8-42a4-828c-b6c2f29fb34c",
+                  classroom_id: "765a8a0a-5607-4496-b537-d37fd54ab0c9",
+                  count: 1,
+                },
+                {
+                  teacher_id: "8b3ee1be-00df-49c1-babd-eb3672a58815",
+                  classroom_id: "765a8a0a-5607-4496-b537-d37fd54ab0c9",
+                  count: 1,
+                },
+                {
+                  teacher_id: "8b3ee1be-00df-49c1-babd-eb3672a58815",
+                  classroom_id: "9402ab13-1094-4cfd-b303-9647e4856dbd",
+                  count: 1,
+                },
+              ],
+            }),
+          }
+        );
+
+        const data = await response.json()
+        console.log("Response", data)
+      });
+    </script>
+  </body>
+</html>
